@@ -25,7 +25,7 @@ public class CSV {
 		String line = "";
 		String cvsSplitBy = ",";
 		String output = "";
-		int index = 40;
+		int index = 11;
 
 		/*
 		 * Since this more a playground to manipulate csv files the structure is
@@ -36,8 +36,8 @@ public class CSV {
 		br = new BufferedReader(new FileReader(csvFile));
 		if (useMethod) {
 			
-			
-			detectOutliers(br, index, cvsSplitBy, line, 1000);
+			normalizer(br, index, cvsSplitBy, line, 0 ,10);
+			//detectOutliers(br, index, cvsSplitBy, line, 1000);
 		} else {
 
 			try {
@@ -81,6 +81,32 @@ public class CSV {
 		}
 	}
 
+	
+	/** outputs the index of a row which is higher than outlierMax */
+	public void normalizer(BufferedReader br, int index, String csvSplit, String line, double min, double max)
+			throws IOException {
+		double output = 0;
+		int counter = 1;
+		while ((line = br.readLine()) != null) {
+			counter++;
+			String[] data = line.split(csvSplit);
+			output = Double.parseDouble(data[index]);
+			output = normalizeFeaturesSCaling(output, min, max);
+			System.out.println(output);
+		}
+	}
+	
+	
+	/** normalizes a specific column */
+	public double normalizeFeaturesSCaling(double val, double min, double max)
+	{
+		double result = -1;
+		
+		result = (val - min) / (max - min);
+		
+		return result;
+	}
+	
 	/** outputs the index of a row which is higher than outlierMax */
 	public void detectOutliers(BufferedReader br, int index, String csvSplit, String line, int outlierMax) throws IOException {
 		double output = 0;
