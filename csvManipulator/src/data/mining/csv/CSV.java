@@ -25,7 +25,7 @@ public class CSV {
 		String line = "";
 		String cvsSplitBy = ",";
 		String output = "";
-		int index = 11;
+		int index = 40;
 
 		/*
 		 * Since this more a playground to manipulate csv files the structure is
